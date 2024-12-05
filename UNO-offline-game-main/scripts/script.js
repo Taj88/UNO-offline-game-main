@@ -178,10 +178,11 @@ const attachClickListener = (cardElement, card, playerDeck) => {
    }
 
    // Get last card information
-   let lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
+   let lastCard = usedCards.length > 0 ? usedCards[usedCards.length - 1] : null;
 
    if (lastCard) {
-    let [lastCardColor, lastCardType] = lastCard;
+    let lastCardColor = lastCard.color;
+    let lastCardType = lastCard.type;
     const specialCardTypes = ["plus2", "plus4", "reverse", "changeColor"];
 
     // Rule: Plus4 can always be dropped
@@ -236,6 +237,11 @@ const attachClickListener = (cardElement, card, playerDeck) => {
 
    // Remove the card visually
    cardElement.remove();
+
+   // Switch to player 2's turn
+   setTimeout(() => {
+    player2Turn();
+   }, 500); // Delay to simulate turn switch
   } else {
    console.warn("No more cards in the deck.");
   }
@@ -359,15 +365,16 @@ function playerTurnListener(playerTurn1) {
  }
 
  // Enable valid cards and disable invalid ones
- const cardElements = document.querySelectorAll(".cardImg"); // Cards have the class "cardImg"
- const lastCard = usedCards.length > 0 ? lastUsedCard(usedCards) : null;
+ const cardElements = document.querySelectorAll(".cardimg"); // Cards have the class "cardimg"
+ const lastCard = usedCards.length > 0 ? usedCards[usedCards.length - 1] : null;
 
  cardElements.forEach((cardElement) => {
   const cardData = JSON.parse(cardElement.dataset.card); // Assuming card data is in a `data-card` attribute
   let isValid = false; // Default to invalid
 
   if (lastCard) {
-   const [lastCardColor, lastCardType] = lastCard;
+   const lastCardColor = lastCard.color;
+   const lastCardType = lastCard.type;
    const specialCardTypes = ["plus2", "plus4", "reverse", "changeColor"];
 
    // Determine validity based on game rules
@@ -382,6 +389,10 @@ function playerTurnListener(playerTurn1) {
   } else {
    isValid = true; // All cards are valid if no last card exists
   }
+
+  // Enable or disable card based on validity
+  cardElement.style.pointerEvents = isValid ? "auto" : "none";
+  cardElement.style.opacity = isValid ? "1" : "0.5";
  });
 }
 playerTurnListener(playerTurn1);
@@ -446,6 +457,18 @@ function player2Turn() {
   playCard(validCard);
  } else {
   drawCard("player2");
+  setTimeout(() => {
+   const newCardElement = document.querySelector(
+    "#opponentcards img:last-child"
+   );
+   const newCard = JSON.parse(newCardElement.dataset.card);
+   if (isValidCard(newCard, lastCard)) {
+    playCard(newCardElement);
+   } else {
+    playerTurn1 = true;
+    playerTurnListener(playerTurn1);
+   }
+  }, 500); // Delay to simulate drawing time
  }
 }
 
@@ -460,22 +483,10 @@ function isValidCard(card, lastCard) {
 function playCard(cardElement) {
  const card = JSON.parse(cardElement.dataset.card);
  usedCards.push(card);
- document.querySelector(".stack-cards").appendChild(cardElement);
+ document.querySelector(".used-cards").appendChild(cardElement);
  cardElement.remove();
- playerTurn1 = true;
+ playerTurn1 = !playerTurn1;
  playerTurnListener(playerTurn1);
-}
-
-function drawCard(player) {
- const newCard = unusedCards.pop();
- const newCardElement = document.createElement("img");
- newCardElement.src = getCardImagePath(newCard);
- newCardElement.classList.add("cardimg");
- newCardElement.dataset.card = JSON.stringify(newCard);
- document.getElementById(`${player}cards`).appendChild(newCardElement);
- if (player === "player2") {
-  player2Turn();
- }
 }
 
 // Call player2Turn at the appropriate time in your game logic
