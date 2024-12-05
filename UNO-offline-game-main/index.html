@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNO Game</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Uno Offile Game</h1>
+    <button class="info">i</button>
+  </header>
+  <main>
+
+
+    
+    <div class="mycards">
+      <h2 id="player1" class="player1">Player 1</h2>
+
+      <div class="line">
+        <img src="./assets/imgs/misc/line.png" alt="line">
+      </div>
+      <div class="card-container" id="yourcards" >
+        <!-- dynamically added deck of cards -->
+      </div>
+    </div>
+
+
+    <div class="opponentcards" >
+      <h2 id="player2" class="player2">Player 2</h2>
+      <div class="line">
+        <img src="./assets/imgs/misc/line.png" alt="line">
+      </div>
+      <div class="card-container" id="opponentcards">
+        <!-- dynamically added deck of cards -->
+      </div>
+    </div>
+
+    
+    <div class="deck-of-cards">
+      <div class="used-cards">
+        <!-- dynamically added -->
+      </div>
+      <div class="stack-cards">
+        <img src="./assets/imgs/cards/card-back.png" alt="Card Back">
+        <img src="./assets/imgs/cards/card-back.png" alt="Card Back">
+        <img src="./assets/imgs/cards/card-back.png" alt="Card Back">
+        <img src="./assets/imgs/cards/card-front.png" alt="Last Card">
+      </div>
+    </div>
+
+    <div class="score-container">
+      <div class="scores-section">
+        <p class="yourscore-p">Your score (player 1)</p>
+        <p class="scores" id="yourscore">0</p>
+      </div>
+      <div class="scores-section">
+        <p class="opponentscore-p"> Player 2 score</p>
+        <p class="scores" id="opponentscore">0</p>
+      </div>
+    </div>
+
+    <div class="changeColor-overlay"></div> <!-- Black background to avoid being touched the background of the modal  -->
+    <div class="changeColor-modal">
+      <h1>Select a color</h1>
+      <div class="modal-container">
+        <div class="btn-color">
+          <button id="red" aria-label="Red button"></button>
+          <p>Red</p>
+        </div>
+        <div class="btn-color">
+          <button id="green" aria-label="Green button"></button>
+          <p>Green</p>
+        </div>
+        <div class="btn-color">
+          <button id="blue" aria-label="Blue button"></button>
+          <p>Blue</p>
+        </div>
+        <div class="btn-color">
+          <button id="yellow" aria-label="Yellow button"></button>
+          <p>Yellow</p>
+        </div>        
+      </div>
+    </div>
+
+    <div class="gameInfo-modal">
+
+    </div>
+
+  </main>
+
+  <script src="./scripts/script.js"></script>
+</body>
+</html>

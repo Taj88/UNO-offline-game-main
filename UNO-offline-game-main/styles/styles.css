@@ -1,0 +1,326 @@
+@font-face {
+  font-family: 'Merienda';
+  /* Font family name */
+  src: url('./../assets/fonts/Merienda-Light.ttf') format('truetype');
+  font-weight: 300;
+  /* Light */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('./../assets/fonts/Merienda-Regular.ttf') format('truetype');
+  font-weight: 400;
+  /* Regular (default) */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('./../assets/fonts/Merienda-Medium.ttf') format('truetype');
+  font-weight: 500;
+  /* Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('./../assets/fonts/Merienda-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  /* Semibold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('./../assets/fonts/Merienda-Bold.ttf') format('truetype');
+  font-weight: 700;
+  /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('./../assets/fonts/Merienda-Extrabold.ttf') format('truetype');
+  font-weight: 800;
+  /* Extrabold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('./../assets/fonts/Merienda-Black.ttf') format('truetype');
+  font-weight: 900;
+  /* Black */
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  color: white;
+  background-color: black;
+  font-family: 'Merienda', sans-serif;
+  /* Fallback to sans-serif */
+  font-weight: 400;
+  background-image: radial-gradient(#642B73, rgba(36, 10, 43, 0.8), rgba(0, 0, 0, 0.9));
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+}
+
+h1 {
+  font-size: clamp(15px, 5vw, 22px);
+}
+
+button.info {
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: #642B73;
+}
+
+button.info:hover {
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.37);
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  flex: 1;
+}
+
+
+.score-container {
+  display: flex;
+  position: fixed;
+  width: 96vw;
+  justify-content: space-between;
+  padding-inline: 20px
+}
+
+.opponentcards {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.mycards {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+h2.player1,
+h2.player2 {
+  opacity: 45%;
+  font-size: clamp(12px, 10vw, 15px);
+}
+
+
+.player1 {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+
+/* deck of cards */
+
+.deck-of-cards {
+  display: flex;
+  gap: 20px;
+  z-index: 1;
+}
+
+img.cardimg {
+  width: 55px;
+  height: auto;
+  border-radius: 5px;
+  transition: transform 0.2s;
+}
+
+img.cardimg:hover {
+  cursor: pointer;
+}
+
+.stack-cards {
+  width: 55px;
+  position: relative;
+}
+
+.stack-cards img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.stack-cards img:last-child {
+  z-index: 2;
+  transform: translateY(-10px);
+}
+
+.used-cards {
+  position: relative;
+  width: 55px;
+  height: 80px;
+}
+
+.used-cards img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.used-cards img:not(:last-child) {
+  transform: translateY(-10px);
+}
+
+/* The overlay layer to block background interaction */
+.changeColor-overlay {
+  display: none;
+  /* display: block; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* The modal itself */
+.changeColor-modal {
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  position: fixed;
+  z-index: 3;
+  /* Above the overlay */
+  width: clamp(390px, 50vw, 100vw);
+  height: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #642B73;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.changeColor-modal h1 {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  gap: clamp(20px, 5vw, 50px);
+}
+
+.btn-color {
+  width: clamp(50px, 5vw, 70px);
+  height: clamp(50px, 5vw, 70px);
+}
+
+.btn-color>p {
+  top: 0;
+  transform: unset;
+  position: absolute;
+  top: 230px;
+  margin-left: clamp(0px, 1vw, 16px) !important;
+}
+
+.btn-color button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  cursor: pointer;
+  border: 1px solid black;
+  position: relative;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.btn-color button:hover {
+  transform: scale(1.2);
+}
+
+button#red {
+  background-color: rgba(255, 0, 0, 0.80);
+}
+
+button#green {
+  background-color: rgba(0, 128, 0, 0.80);
+}
+
+button#blue {
+  background-color: rgba(0, 0, 255, 0.80);
+}
+
+button#yellow {
+  background-color: rgba(255, 255, 0, 0.80);
+}
+
+/* Scores */
+
+p.scores {
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Animations */
+
+img.cardimg.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+
+  75% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
